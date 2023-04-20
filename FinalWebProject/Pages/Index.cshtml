@@ -1,0 +1,14 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class = "display-4">T&T Cooperation</h1>
+    <p>Welcome to the T&T Distributing System. Let's get started</p>
+    <div class = "btn-group">
+        <a class = "btn btn-primary" asp-page="/Authentication/Login">Login</a>
+        <a class = "btn btn-danger" asp-page="/Authentication/Register">Register</a>
+    </div>
+</div>

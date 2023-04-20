@@ -1,0 +1,31 @@
+﻿@page
+@model FinalWebProject.Pages.AccountantSite.ReceiptListingModel
+@{
+}
+
+<div class = "container my-4">
+	<h4 class  = "text-center display-4">Receipt List</h4>
+	<div class = "row">
+		@{
+			foreach(var receipt in Model.Receipts)
+			{
+				<div class = "col-lg-4">
+					<div class = "card h-100">
+						<div class = "card-header">
+							<h5>Import Receipt Id: @Html.DisplayFor(receiptItem => receipt.ReceiptId)</h5>
+						</div>
+						<div class = "card-body">
+							<p>Import Receipt Total: <strong>@Html.DisplayFor(receiptItem => receipt.TotalPrice)</strong></p>
+							<p>Import Receipt Date: <strong>@receipt.DateCreated.ToString("dd/MM/yyyy")</strong></p>
+							<p>Import Receipt Accountant: <strong>@Html.DisplayFor(receiptItem => receipt.Accountant.AcccountantName)</strong></p>
+						</div>
+						<div class = "card-footer">
+							<a asp-page = "./ReceiptDetails" asp-route-id = "@receipt.ReceiptId" class="btn btn-primary">View Details</a>
+						</div>
+					</div>
+				</div>
+			}
+		}
+	</div>
+	<a asp-page="./Index" class = "btn btn-danger mt-3">Go Back</a>
+</div>

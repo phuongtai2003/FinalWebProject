@@ -1,0 +1,58 @@
+﻿@page
+@model FinalWebProject.Pages.Admin.PhoneManagement.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Phone</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype = "multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Phone.PhoneName" class="control-label"></label>
+                <input asp-for="Phone.PhoneName" class="form-control" />
+                <span asp-validation-for="Phone.PhoneName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone.PhoneDescription" class="control-label"></label>
+                <textarea rows = "8" asp-for="Phone.PhoneDescription" class="form-control"></textarea>
+                <span asp-validation-for="Phone.PhoneDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone.PhoneYear" class="control-label"></label>
+                <input asp-for="Phone.PhoneYear" class="form-control" />
+                <span asp-validation-for="Phone.PhoneYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone.Image" class="control-label"></label>
+                <input type = "file" asp-for="Phone.Image" class="form-control" />
+                <span asp-validation-for="Phone.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone.Price" class="control-label"></label>
+                <input asp-for="Phone.Price" class="form-control" />
+                <span asp-validation-for="Phone.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone.ManufacturerId" class="control-label"></label>
+                <select asp-for="Phone.ManufacturerId" class ="form-control" asp-items="@Model.ManufacturerList"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

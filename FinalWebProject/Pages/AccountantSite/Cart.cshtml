@@ -1,0 +1,74 @@
+﻿@page
+@model FinalWebProject.Pages.AccountantSite.CartModel
+@{
+    var total = 0;
+}
+
+<h4 class = "display-4 text-center">Accountant Cart</h4>
+<form method = "post" asp-page-handler="Update">
+    <div class = "container">
+        <button type = "submit" class = "btn btn-success mb-5">Update Cart</button>
+	    <div class = "row">
+		    <div class = "col-lg-10 col-md-12 mx-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.GetCartItems()[0].Phone.PhoneName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.GetCartItems()[0].Phone.PhoneDescription)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.GetCartItems()[0].Phone.Image)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.GetCartItems()[0].Quantity)
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.GetCartItems()){
+                            var price = item.Quantity * item.Phone.Price;
+                            total = total + price;
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Phone.PhoneName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Phone.PhoneDescription)
+                                </td>
+                                <td>
+                                    <img style = "height: 25%; width: 25%" src = "@Html.DisplayFor(modelItem => item.Phone.Image)"></img>
+                                </td>
+                                <td>
+                                    <input type = "number" name = "quantities[]" value = "@Html.DisplayFor(modelItem => item.Quantity)" min = "1"></input> 
+                                </td>
+                                <td>
+                                    $@(price)
+                                </td>
+                                <td>
+                                    <a class = "btn btn-danger" asp-page-handler="Remove" asp-route-id = "@item.Phone.PhoneId">Remove</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+		    </div>
+	    </div>
+        <h5>Total Price: $@(total)</h5>
+        <a asp-page = "./PhonesListing" class = "btn btn-primary">Go Back</a>
+        <a asp-page-handler="Confirm" class = "btn btn-info">Confirming Order</a>
+        @{  if (ViewBag.Error != null)
+            {
+                <div class = "alert alert-danger text-center mt-3">@ViewBag.Error</div>
+            }
+        }
+    </div>
+</form>

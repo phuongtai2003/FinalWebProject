@@ -1,0 +1,55 @@
+﻿@page
+@model FinalWebProject.Pages.AccountantSite.ReceiptDetailsModel
+@{
+}
+
+<div class = "container">
+	<div class = "row">
+		<div class = "col-lg-10">
+			<table class = "table">
+				<thead>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							Phone
+						</th>
+						<th>
+							Quantity
+						</th>
+						<th>
+							Price
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@{
+						int i = 1;
+						foreach(var item in Model.ReceiptDetails)
+						{
+							
+							<tr>
+								<th>
+									@i
+								</th>
+								<th>
+									@Html.DisplayFor(modelItem => item.Phone.PhoneName)
+								</th>
+								<th>
+									@Html.DisplayFor(modelItem => item.Quantity)
+								</th>
+								<th>
+									$@Html.DisplayFor(modelItem => item.Price)
+								</th>
+							</tr>
+							i++;
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<p>Total: <strong>$@Model.Receipt.TotalPrice</strong></p>
+	<a asp-page="./ReceiptListing" class = "btn btn-danger mt-4">Go Back</a>
+</div>
