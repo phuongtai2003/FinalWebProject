@@ -17,5 +17,6 @@ namespace FinalWebProject.Data
 		public string WarehouseLocation { get; set; }
 		public virtual ICollection<Accountant> Accountants { get; set; }
 		public virtual ICollection<WarehouseProducts> WarehouseProducts { get; set; }
+		public virtual ICollection<ResellerImportReceiptDetails> ResellerImportReceiptDetails { get;set; }
 	}
 }

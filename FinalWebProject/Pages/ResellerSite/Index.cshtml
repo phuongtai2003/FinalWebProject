@@ -1,0 +1,15 @@
+﻿@page
+@model FinalWebProject.Pages.ResellerSite.IndexModel
+@{
+	ViewData["Title"] = "Reseller Panel";
+}
+<h4 class = "display-4 text-center">Hello World</h4>
+<div class = "container mt-3">
+	<div class = "row">
+		<div class = "w-50 mx-auto btn-group">
+			<a asp-page="./PhoneListing" asp-route-id = "1" class = "btn btn-primary">Create Import Orders</a>
+			<a asp-page="./OrderList" class = "btn btn-info">View Orders Status</a>
+			<a asp-page="./Storage" class = "btn btn-danger">View Storage</a>
+		</div>
+	</div>
+</div>

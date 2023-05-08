@@ -1,0 +1,34 @@
+﻿@page
+@model FinalWebProject.Pages.ResellerSite.StorageModel
+@{
+}
+
+<div class = "container">
+	<h4 class = "display-4 text-center">@Model.Reseller.ResellerName Storage</h4>
+	<table class = "table">
+		<thead>
+			<tr>
+				<th>@Html.DisplayNameFor(model => model.Storages[0].Phone.PhoneName)</th>
+				<th>@Html.DisplayNameFor(model => model.Storages[0].Phone.Image)</th>
+				<th>@Html.DisplayNameFor(model => model.Storages[0].Phone.Manufacturer.ManufacturerName)</th>
+				<th>@Html.DisplayNameFor(model => model.Storages[0].Quantity)</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach(var item in Model.Storages)
+				{
+					<tr>
+						<td>@Html.DisplayFor(modelItem => item.Phone.PhoneName)</td>
+						<td>
+							<img style = "height: 25%; width: 25%;" src = "@Html.DisplayFor(modelItem => item.Phone.Image)">
+						</td>
+						<td>@Html.DisplayFor(modelItem => item.Phone.Manufacturer.ManufacturerName)</td>
+						<td>@Html.DisplayFor(modelItem=> item.Quantity)</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	<a asp-page = "./Index" class = "btn btn-danger">Go Back</a>
+</div>
