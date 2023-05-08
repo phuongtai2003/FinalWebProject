@@ -1,0 +1,35 @@
+﻿@page
+@model FinalWebProject.Pages.AccountantSite.ImportOrderListingModel
+@{
+}
+
+<div class = "container">
+	<h4 class = "display-4 text-center">Reseller Import Order</h4>
+	<div class = "row">
+		@{
+			foreach(var order in Model.ResellerImportReceipts)
+			{
+				<div class = "col-lg-4">
+					<div class = "card h-100">
+						<div class = "card-header">
+							<h5>Order Number: @Html.DisplayFor(receiptItem => order.ResellerImportReceiptId)</h5>
+						</div>
+						<div class = "card-body">
+							<p>Import Order Total: <strong>@order.TotalPrice.ToString("#,##0") VND</strong></p>
+							<p>Import Order Date: <strong>@order.DateCreated.ToString("dd/MM/yyyy")</strong></p>
+							<p>Import Order Reseller: <strong>@Html.DisplayFor(receiptItem => order.Reseller.ResellerName)</strong></p>
+							<p>Payment Method: <strong>@Html.DisplayFor(receiptItem => order.PaymentMethod)</strong></p>
+							<p>Payment Status: <strong>@(order.PaymentStatus == 0 ? "Waiting for confirmation" : "Cofirmed")</strong></p>
+							<p>Delivery Status: <strong>@Html.DisplayFor(receiptItem => order.DeliveryStatus.DeliveryStatusName)</strong></p>
+						</div>
+						<div class = "card-footer">
+							<a asp-page = "./OrderDetails" asp-route-id = "@order.ResellerImportReceiptId" class = "btn btn-danger">Details</a>
+							<a asp-page = "./ConfirmOrder" asp-route-id = "@order.ResellerImportReceiptId" class = "btn btn-primary">Confirm</a>
+						</div>
+					</div>
+				</div>
+			}
+		}
+	</div>
+	<a asp-page="./Index" class = "btn btn-danger mt-3">Go Back</a>
+</div>

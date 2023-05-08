@@ -52,6 +52,73 @@ namespace FinalWebProject.Data.Migrations
                     b.ToTable("Accountant");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.DeliveryStatus", b =>
+                {
+                    b.Property<int>("DeliveryStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryStatusId"));
+
+                    b.Property<string>("DeliveryStatusName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DeliveryStatusId");
+
+                    b.ToTable("DeliveryStatus");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ExportReceipt", b =>
+                {
+                    b.Property<int>("ExportReceiptId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExportReceiptId"));
+
+                    b.Property<int>("AccountantId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExportReceiptId");
+
+                    b.HasIndex("AccountantId");
+
+                    b.ToTable("ExportReceipt");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ExportReceiptDetails", b =>
+                {
+                    b.Property<int>("PhoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResellerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExportReceiptId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("PhoneId", "ResellerId", "ExportReceiptId");
+
+                    b.HasIndex("ExportReceiptId");
+
+                    b.HasIndex("ResellerId");
+
+                    b.ToTable("ExportReceiptDetails");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.Manufacturer", b =>
                 {
                     b.Property<int>("ManufacturerId")
@@ -182,6 +249,88 @@ namespace FinalWebProject.Data.Migrations
                     b.ToTable("Reseller");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.ResellerImportReceipt", b =>
+                {
+                    b.Property<int>("ResellerImportReceiptId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResellerImportReceiptId"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DeliveryStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentStatus")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("ResellerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("ResellerImportReceiptId");
+
+                    b.HasIndex("DeliveryStatusId");
+
+                    b.HasIndex("ResellerId");
+
+                    b.ToTable("ResellerImportReceipt");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ResellerImportReceiptDetails", b =>
+                {
+                    b.Property<int>("PhoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResellerImportReceiptId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("PhoneId", "ResellerImportReceiptId", "WarehouseId");
+
+                    b.HasIndex("ResellerImportReceiptId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("ResellerImportReceiptDetail");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ResellerStorage", b =>
+                {
+                    b.Property<int>("PhoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResellerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("PhoneId", "ResellerId");
+
+                    b.HasIndex("ResellerId");
+
+                    b.ToTable("ResellerStorage");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.Warehouse", b =>
                 {
                     b.Property<int>("WarehouseId")
@@ -232,6 +381,44 @@ namespace FinalWebProject.Data.Migrations
                     b.Navigation("Warehouse");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.ExportReceipt", b =>
+                {
+                    b.HasOne("FinalWebProject.Data.Accountant", "Accountant")
+                        .WithMany("ExportReceipts")
+                        .HasForeignKey("AccountantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Accountant");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ExportReceiptDetails", b =>
+                {
+                    b.HasOne("FinalWebProject.Data.ExportReceipt", "ExportReceipt")
+                        .WithMany("ExportReceiptDetails")
+                        .HasForeignKey("ExportReceiptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalWebProject.Data.Phone", "Phone")
+                        .WithMany("ExportReceiptDetails")
+                        .HasForeignKey("PhoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalWebProject.Data.Reseller", "Reseller")
+                        .WithMany("ExportReceiptDetails")
+                        .HasForeignKey("ResellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExportReceipt");
+
+                    b.Navigation("Phone");
+
+                    b.Navigation("Reseller");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.Phone", b =>
                 {
                     b.HasOne("FinalWebProject.Data.Manufacturer", "Manufacturer")
@@ -273,6 +460,71 @@ namespace FinalWebProject.Data.Migrations
                     b.Navigation("Receipt");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.ResellerImportReceipt", b =>
+                {
+                    b.HasOne("FinalWebProject.Data.DeliveryStatus", "DeliveryStatus")
+                        .WithMany("ResellerImportReceipts")
+                        .HasForeignKey("DeliveryStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalWebProject.Data.Reseller", "Reseller")
+                        .WithMany("ResellerImportReceipts")
+                        .HasForeignKey("ResellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeliveryStatus");
+
+                    b.Navigation("Reseller");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ResellerImportReceiptDetails", b =>
+                {
+                    b.HasOne("FinalWebProject.Data.Phone", "Phone")
+                        .WithMany("ResellerImportReceiptDetails")
+                        .HasForeignKey("PhoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalWebProject.Data.ResellerImportReceipt", "ResellerImportReceipt")
+                        .WithMany("ResellerImportReceiptDetails")
+                        .HasForeignKey("ResellerImportReceiptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalWebProject.Data.Warehouse", "Warehouse")
+                        .WithMany("ResellerImportReceiptDetails")
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Phone");
+
+                    b.Navigation("ResellerImportReceipt");
+
+                    b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ResellerStorage", b =>
+                {
+                    b.HasOne("FinalWebProject.Data.Phone", "Phone")
+                        .WithMany("ResellerStorage")
+                        .HasForeignKey("PhoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalWebProject.Data.Reseller", "Reseller")
+                        .WithMany("ResellerStorage")
+                        .HasForeignKey("ResellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Phone");
+
+                    b.Navigation("Reseller");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.WarehouseProducts", b =>
                 {
                     b.HasOne("FinalWebProject.Data.Phone", "Phone")
@@ -294,7 +546,19 @@ namespace FinalWebProject.Data.Migrations
 
             modelBuilder.Entity("FinalWebProject.Data.Accountant", b =>
                 {
+                    b.Navigation("ExportReceipts");
+
                     b.Navigation("Receipts");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.DeliveryStatus", b =>
+                {
+                    b.Navigation("ResellerImportReceipts");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ExportReceipt", b =>
+                {
+                    b.Navigation("ExportReceiptDetails");
                 });
 
             modelBuilder.Entity("FinalWebProject.Data.Manufacturer", b =>
@@ -304,7 +568,13 @@ namespace FinalWebProject.Data.Migrations
 
             modelBuilder.Entity("FinalWebProject.Data.Phone", b =>
                 {
+                    b.Navigation("ExportReceiptDetails");
+
                     b.Navigation("ReceiptDetails");
+
+                    b.Navigation("ResellerImportReceiptDetails");
+
+                    b.Navigation("ResellerStorage");
 
                     b.Navigation("WarehouseProducts");
                 });
@@ -314,9 +584,25 @@ namespace FinalWebProject.Data.Migrations
                     b.Navigation("ReceiptDetails");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.Reseller", b =>
+                {
+                    b.Navigation("ExportReceiptDetails");
+
+                    b.Navigation("ResellerImportReceipts");
+
+                    b.Navigation("ResellerStorage");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.ResellerImportReceipt", b =>
+                {
+                    b.Navigation("ResellerImportReceiptDetails");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.Warehouse", b =>
                 {
                     b.Navigation("Accountants");
+
+                    b.Navigation("ResellerImportReceiptDetails");
 
                     b.Navigation("WarehouseProducts");
                 });

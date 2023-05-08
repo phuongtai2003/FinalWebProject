@@ -1,0 +1,68 @@
+﻿@page
+@model FinalWebProject.Pages.AccountantSite.ConfirmOrderModel
+@{
+	var total = 0;
+}
+
+<div class = "container">
+	@{
+		if(ViewBag.Message != null)
+		{
+			<div class = "alert alert-danger text-center">@ViewBag.Message</div>
+		}
+	}
+	<h4 class = "text-center display-4">Confirmation</h4>
+	<table class = "table">
+		<thead>
+			<tr>
+				<th>@Html.DisplayNameFor(model => model.ResellerImportReceiptDetails[0].Phone.PhoneName)</th>
+				<th>@Html.DisplayNameFor(model => model.ResellerImportReceiptDetails[0].Phone.Image)</th>
+				<th>@Html.DisplayNameFor(model => model.ResellerImportReceiptDetails[0].Warehouse.WarehouseName)</th>
+				<th>@Html.DisplayNameFor(model => model.ResellerImportReceiptDetails[0].Phone.PhoneYear)</th>
+				<th>@Html.DisplayNameFor(model => model.ResellerImportReceiptDetails[0].Quantity)</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach (var item in Model.ResellerImportReceiptDetails)
+				{
+					total = total + item.Price;
+					<tr>
+						<td>@Html.DisplayFor(itemModel => item.Phone.PhoneName)</td>
+						<td>
+							<img style = "height: 25%; width: 25%;" src = "@Html.DisplayFor(itemModel => item.Phone.Image)">
+						</td>
+						<td>
+							@Html.DisplayFor(itemModel =>item.Warehouse.WarehouseName)
+						</td>
+						<td>
+							@Html.DisplayFor(itemModel =>item.Phone.PhoneYear)
+						</td>
+						<td>
+							@Html.DisplayFor(itemModel =>item.Quantity)
+						</td>
+						<td>
+							@item.Price.ToString("#,##0") VND
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	<h5>@total.ToString("#,##0") VND</h5>
+	<form method = "post">
+		<div class = "form-group mb-3">
+			<label for = "delivery-status-field" class = "form-label">Delivery Status</label>
+			<select readonly id = "delivery-status-field" class = "form-control" name = "deliveryStatus" asp-items="@Model.DeliveryStatusList"></select>
+		</div>
+		<div class = "form-group mb-3">
+			<label for = "payment-status-field" class = "form-label">Payment Status</label>
+			<select readonly id = "payment-status-field" class = "form-control" name = "paymentStatus">
+				<option value = "1">Completed</option>
+			</select>
+		</div>
+		<input type = "hidden" name = "orderId" value = "@Model.ResellerImportReceipt.ResellerImportReceiptId"/>
+		<button type = "submit" class = "btn btn-primary">Confirm Order</button>
+	</form>
+</div>

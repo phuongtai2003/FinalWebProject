@@ -1,0 +1,23 @@
+﻿@page
+@model FinalWebProject.Pages.Admin.ResellerManagement.DetailsModel
+@{
+	ViewData["Title"] = "Reseller Details";
+}
+
+<div class = "container">
+	<h4 class = "text-center display-4 mb-3">Reseller Details</h4>
+	<div class = "row">
+		<h5 class = "col-2">@Html.DisplayNameFor(model => model.Reseller.ResellerName)</h5>
+		<span class = "col-10">@Html.DisplayFor(model => model.Reseller.ResellerName)</span>
+
+		<h5 class = "col-2">@Html.DisplayNameFor(model => model.Reseller.ResellerEmail)</h5>
+		<span class = "col-10">@Html.DisplayFor(model => model.Reseller.ResellerEmail)</span>
+
+		<h5 class = "col-2">@Html.DisplayNameFor(model => model.Reseller.ResellerLocation)</h5>
+		<span class = "col-10">@Html.DisplayFor(model => model.Reseller.ResellerLocation)</span>
+
+		<h5 class = "col-2">@Html.DisplayNameFor(model => model.Reseller.ResellerPassword)</h5>
+		<span class = "col-10">@Html.DisplayFor(model => model.Reseller.ResellerPassword)</span>
+	</div>
+	<a asp-page="./Index" class = "btn btn-danger mt-3">Go Back</a>
+</div>

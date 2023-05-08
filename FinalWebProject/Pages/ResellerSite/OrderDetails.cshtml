@@ -1,0 +1,70 @@
+﻿@page
+@model FinalWebProject.Pages.ResellerSite.OrderDetailsModel
+@{
+	var total = 0;
+}
+
+<div class = "container">
+	<h4 class = "display-4 text-center mb-3">Order Details</h4>
+	<table class = "table mb-3">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.OrderDetails[0].Phone.PhoneName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.OrderDetails[0].Phone.Image)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.OrderDetails[0].Quantity)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.OrderDetails[0].Phone.Manufacturer.ManufacturerName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.OrderDetails[0].Phone.PhoneYear)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.OrderDetails[0].Warehouse.WarehouseName)
+				</th>
+
+				<th>
+					Price
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var item in Model.OrderDetails)
+			{
+				var price = item.Phone.Price * item.Quantity;
+				total = total + price;
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Phone.PhoneName)
+					</td>
+					<td>
+						<img style = "height: 25%; width: 25%" src = "@Html.DisplayFor(modelItem => item.Phone.Image)">
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Quantity)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Phone.Manufacturer.ManufacturerName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Phone.PhoneYear)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Warehouse.WarehouseName)
+					</td>
+					<td>
+						@total.ToString("#,##0") VND
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<h5>Total: @total.ToString("#,##0") VND</h5>
+
+	<a asp-page = "./OrderList" class = "btn btn-primary">Go Back</a>
+</div>

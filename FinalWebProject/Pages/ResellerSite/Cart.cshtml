@@ -1,0 +1,70 @@
+﻿@page
+@model FinalWebProject.Pages.ResellerSite.CartModel
+@{
+	var total = 0;
+}
+
+<h4 class = "display-4 text-center mb-3">Reseller Cart</h4>
+<form method = "post" asp-page-handler="Update">
+	<div class = "container">
+		<button type = "submit" class = "btn btn-success">Update</button>
+		<div class = "row">
+			<div class = "col-lg-10 mx-auto">
+				<table class = "table">
+					<thead>
+						<tr>
+							<th>
+									@Html.DisplayNameFor(model => model.GetCartItems()[0].Phone.PhoneName)
+							</th>
+							<th>
+									@Html.DisplayNameFor(model => model.GetCartItems()[0].Phone.PhoneDescription)
+							</th>
+							<th>
+									@Html.DisplayNameFor(model => model.GetCartItems()[0].Phone.Price)
+							</th>
+							<th>
+									@Html.DisplayNameFor(model => model.GetCartItems()[0].Warehouse.WarehouseName)
+							</th>
+							<th>
+									@Html.DisplayNameFor(model => model.GetCartItems()[0].Quantity)
+							</th>
+							<th>Total Price</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+							@foreach (var item in Model.GetCartItems())
+							{
+								var price = item.Quantity * item.Phone.Price;
+								total = total + price;
+								<tr>
+									<td>
+										@Html.DisplayFor(modelItem => item.Phone.PhoneName)
+									</td>
+									<td>
+										<img style = "height: 25%; width: 25%" src = "@Html.DisplayFor(modelItem => item.Phone.Image)"> 
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.Phone.Price)
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.Warehouse.WarehouseName)
+									</td>
+									<td>
+										<input type = "number" name = "quantities[]" value = "@Html.DisplayFor(modelItem => item.Quantity)" min = "1"> 
+									</td>
+									<td>
+										@price.ToString("#,##0") VND
+									</td>
+									<td><a asp-page-handler="Remove" class = "btn btn-danger" asp-route-phoneId = "@item.Phone.PhoneId" asp-route-warehouseId = "@item.Warehouse.WarehouseId">Remove Item</a></td>
+								</tr>
+							}
+					</tbody>
+				</table>
+				<h5>Total: @total.ToString("#,##0") VND</h5>
+			</div>
+		</div>
+		<a asp-page = "./PhoneListing" class = "btn btn-primary">Go Back</a>
+		<a asp-page = "./PaymentMethod" class = "btn btn-info">Confirm</a>
+	</div>
+</form>

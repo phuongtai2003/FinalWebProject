@@ -51,7 +51,7 @@
                                     <input type = "number" name = "quantities[]" value = "@Html.DisplayFor(modelItem => item.Quantity)" min = "1"></input> 
                                 </td>
                                 <td>
-                                    $@(price)
+                                    @(price.ToString("#,##0")) VND
                                 </td>
                                 <td>
                                     <a class = "btn btn-danger" asp-page-handler="Remove" asp-route-id = "@item.Phone.PhoneId">Remove</a>
@@ -62,7 +62,7 @@
                 </table>
 		    </div>
 	    </div>
-        <h5>Total Price: $@(total)</h5>
+        <h5>Total Price: @(total.ToString("#,##0")) VND</h5>
         <a asp-page = "./PhonesListing" class = "btn btn-primary">Go Back</a>
         <a asp-page-handler="Confirm" class = "btn btn-info">Confirming Order</a>
         @{  if (ViewBag.Error != null)

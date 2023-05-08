@@ -1,0 +1,67 @@
+﻿@page
+@model FinalWebProject.Pages.ResellerSite.PhoneListingModel
+@{
+	ViewData["Title"] = "Reseller Import";
+}
+<div class = "container" >
+	<select id = "warehouse-select" value = "">
+		<option value = "-1">None</option>
+		@{
+			foreach(var item in Model.WarehouseList)
+			{
+				<option value = "@item.Value">@item.Text</option>
+			}
+		}
+	</select>
+	<div class = "row">
+		@{
+			foreach(var item in Model.WarehouseProducts)
+			{
+				<div class = "col-lg-4 mb-3">
+					<div class = "card h-100">
+						<div class = "card-header">
+							<img src= "@Html.DisplayFor(modelItem => item.Phone.Image)" style="width: 100%"></img>
+						</div>
+						<div class = "card-body">
+							<div>
+								<strong>Phone Name:</strong>
+								<span>@Html.DisplayFor(modelItem => item.Phone.PhoneName)</span>
+							</div>
+							<div>
+								<strong>Phone Description:</strong>
+								<span>@Html.DisplayFor(modelItem => item.Phone.PhoneDescription)</span>
+							</div>
+							<div>
+								<strong>Phone Year:</strong>
+								<span>@Html.DisplayFor(modelItem => item.Phone.PhoneYear)</span>
+							</div>
+							<div>
+								<strong>Phone Year:</strong>
+								<span>@Html.DisplayFor(modelItem => item.Phone.Manufacturer.ManufacturerName)</span>
+							</div>
+							<div>
+								<strong>Quantity:</strong>
+								<span>@Html.DisplayFor(modelItem => item.Quantity)</span>
+							</div>
+						</div>
+						<div class = "card-footer">
+							<a asp-page = "./Cart" asp-page-handler="Add" asp-route-phoneId = "@item.Phone.PhoneId" asp-route-warehouseId = "@item.Warehouse.WarehouseId" class = "btn btn-primary">Import Now</a>
+						</div>
+					</div>
+				</div>
+			}
+		}
+	</div>
+</div>
+
+<script>
+	var allOptions = document.querySelectorAll("#warehouse-select")
+	allOptions.forEach(option => {
+		option.addEventListener("click", function(){
+			if(this.value != -1){
+				window.location.href = "PhoneListing?id=" + this.value;
+			}
+		});
+	});
+	
+</script>

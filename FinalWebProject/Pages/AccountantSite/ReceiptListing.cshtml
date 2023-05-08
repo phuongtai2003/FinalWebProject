@@ -15,7 +15,7 @@
 							<h5>Import Receipt Id: @Html.DisplayFor(receiptItem => receipt.ReceiptId)</h5>
 						</div>
 						<div class = "card-body">
-							<p>Import Receipt Total: <strong>@Html.DisplayFor(receiptItem => receipt.TotalPrice)</strong></p>
+							<p>Import Receipt Total: <strong>@receipt.TotalPrice.ToString("#,##0") VNĐ</strong></p>
 							<p>Import Receipt Date: <strong>@receipt.DateCreated.ToString("dd/MM/yyyy")</strong></p>
 							<p>Import Receipt Accountant: <strong>@Html.DisplayFor(receiptItem => receipt.Accountant.AcccountantName)</strong></p>
 						</div>
