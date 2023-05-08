@@ -1,0 +1,29 @@
+﻿@page
+@model FinalWebProject.Pages.Admin.ResellerManagement.DeleteModel
+@{
+	ViewData["Title"] = "Delete Reseller";
+}
+
+<div class = "container">
+	<h4 class = "text-center display-4 mb-4">Delete Reseller</h4>
+	<p>Are you sure you want to delete this Reseller</p>
+	<div class = "row">
+		<h5 class = "col-2">@Html.DisplayNameFor(model => model.Reseller.ResellerEmail)</h5>
+		<span class = "col-10">@Html.DisplayFor(model => model.Reseller.ResellerEmail)</span>
+
+		<h5 class = "col-2">@Html.DisplayNameFor(model => model.Reseller.ResellerName)</h5>
+		<span class = "col-10">@Html.DisplayFor(model => model.Reseller.ResellerName)</span>
+		
+		<h5 class = "col-2">@Html.DisplayNameFor(model => model.Reseller.ResellerPassword)</h5>
+		<span class = "col-10">@Html.DisplayFor(model => model.Reseller.ResellerPassword)</span>
+
+		<h5 class = "col-2">@Html.DisplayNameFor(model => model.Reseller.ResellerLocation)</h5>
+		<span class = "col-10">@Html.DisplayFor(model => model.Reseller.ResellerLocation)</span>
+	</div>
+	
+	<form method = "post">
+		<input asp-for = "@Model.Reseller.ResellerId" type = "hidden"></input>
+		<a class = "btn btn-warning" asp-page="./Index">No</a>
+		<button class = "btn btn-danger" type = "submit">Yes</button>
+	</form>
+</div>

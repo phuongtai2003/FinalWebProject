@@ -40,7 +40,7 @@
 									@Html.DisplayFor(modelItem => item.Quantity)
 								</th>
 								<th>
-									$@Html.DisplayFor(modelItem => item.Price)
+									@item.Price.ToString("#,##0") VND
 								</th>
 							</tr>
 							i++;
@@ -50,6 +50,6 @@
 			</table>
 		</div>
 	</div>
-	<p>Total: <strong>$@Model.Receipt.TotalPrice</strong></p>
+	<p>Total: <strong>@Model.Receipt.TotalPrice.ToString("#,##0") VND</strong></p>
 	<a asp-page="./ReceiptListing" class = "btn btn-danger mt-4">Go Back</a>
 </div>

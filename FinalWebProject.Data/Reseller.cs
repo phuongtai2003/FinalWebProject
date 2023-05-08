@@ -20,6 +20,9 @@ namespace FinalWebProject.Data
 		public string ResellerPassword { get; set; }
 		[Required]
 		public string ResellerLocation { get; set; }
+		public virtual ICollection<ExportReceiptDetails> ExportReceiptDetails { get; set; }
+		public virtual ICollection<ResellerImportReceipt> ResellerImportReceipts { get; set; }
+		public virtual ICollection<ResellerStorage> ResellerStorage { get; set; }
 
 	}
 }

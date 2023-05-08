@@ -1,0 +1,56 @@
+﻿@page
+@model FinalWebProject.Pages.Admin.AccountantManagement.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class = "text-center">Accountant</h1>
+
+<p>
+    <a asp-page="Create" class = "btn btn-primary mb-3">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Accountant[0].AcccountantName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accountant[0].AccountantEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accountant[0].AccountantPassword)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accountant[0].Warehouse)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Accountant) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcccountantName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountantEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountantPassword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Warehouse.WarehouseLocation)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.AccountantID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.AccountantID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.AccountantID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-page = "../Index" class = "btn btn-danger">Go Back</a>

@@ -1,0 +1,40 @@
+﻿@page
+@model FinalWebProject.Pages.ResellerSite.PaymentMethodModel
+@{
+	var total = 0;
+	var cart = Model.GetCartItems();
+	foreach(var item in cart)
+	{
+		total = total + item.Quantity * item.Phone.Price;
+	}
+}
+<div class = "container">
+	<h4 class = "display-4 text-center">Confirm Order</h4>
+	<form method = "post" class = "mb-4">
+		<div class = "form-group mb-3">
+			<label class = "form-label" for = "email-input">Reseller Email</label>
+			<input id = "email-input" type = "text" name = "resellerEmail" class = "form-control" readonly value = "@Model.Reseller.ResellerEmail"/>
+		</div>
+		<div class = "form-group mb-3">
+			<label class = "form-label" for = "location-input">Reseller Location</label>
+			<input id = "location-input" type = "text" name ="resellerLocation" class ="form-control" readonly value = "@Model.Reseller.ResellerLocation"/>
+		</div>
+		<div class = "form-group mb-3">
+			<label class = "form-label" for = "name-input">Reseller Name</label>
+			<input id = "name-input" type = "text" name ="resellerName" class = "form-control" readonly value = "@Model.Reseller.ResellerName"/>
+		</div>
+		<div class = "form-group mb-3">
+			<label class = "form-label" for = "total-input">Total Price</label>
+			<input id = "total-input" type = "number" name = "totalPrice" class = "form-control" readonly value = "@total"/>
+		</div>
+		<div class = "form-group mb-3">
+			<label class = "form-label" for = "payment-method-input">Payment Method</label>
+			<select class = "form-select" name = "paymentMethod">
+				<option value = "0">Cash</option>
+				<option value = "1">VN Pay</option>
+			</select>
+		</div>
+		<button type = "submit" class = "btn btn-primary">Confirm</button>
+	</form>
+	<a asp-page="./Cart" class = "btn btn-danger">Check Again</a>
+</div>

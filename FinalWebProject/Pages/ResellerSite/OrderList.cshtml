@@ -1,0 +1,34 @@
+﻿@page
+@model FinalWebProject.Pages.ResellerSite.OrderListModel
+@{
+}
+
+<div class = "container my-4">
+	<h4 class  = "text-center display-4">Receipt List</h4>
+	<div class = "row">
+		@{
+			foreach (var receipt in Model.ImportReceipts)
+			{
+				<div class = "col-lg-4">
+					<div class = "card h-100">
+						<div class = "card-header">
+							<h5>Order Number: @Html.DisplayFor(receiptItem => receipt.ResellerImportReceiptId)</h5>
+						</div>
+						<div class = "card-body">
+							<p>Import Receipt Total: <strong>@receipt.TotalPrice.ToString("#,##0") VND</strong></p>
+							<p>Import Receipt Date: <strong>@receipt.DateCreated.ToString("dd/MM/yyyy")</strong></p>
+							<p>Import Receipt Accountant: <strong>@Html.DisplayFor(receiptItem => receipt.Reseller.ResellerName)</strong></p>
+							<p>Payment Method: <strong>@Html.DisplayFor(receiptItem => receipt.PaymentMethod)</strong></p>
+							<p>Payment Status: <strong>@(receipt.PaymentStatus == 0 ? "Waiting for confirmation" : "Cofirmed")</strong></p>
+							<p>Delivery Status: <strong>@Html.DisplayFor(receiptItem => receipt.DeliveryStatus.DeliveryStatusName)</strong></p>
+						</div>
+						<div class = "card-footer">
+							<a asp-page = "./OrderDetails" asp-route-id = "@receipt.ResellerImportReceiptId" class="btn btn-primary">View Order</a>
+						</div>
+					</div>
+				</div>
+			}
+		}
+	</div>
+	<a asp-page="./Index" class = "btn btn-danger mt-3">Go Back</a>
+</div>

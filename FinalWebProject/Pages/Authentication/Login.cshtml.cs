@@ -21,7 +21,7 @@ namespace FinalWebProject.Pages.Authetication
             if (ModelState.IsValid)
             {
                 var isAccountantExist = _context.Accountant.FirstOrDefault(a => a.AccountantEmail.Equals(LoginViewModel.Email) && a.AccountantPassword.Equals(LoginViewModel.Password));
-
+                var isResellerExist = _context.Reseller.FirstOrDefault(r => r.ResellerEmail.Equals(LoginViewModel.Email) && r.ResellerPassword.Equals(LoginViewModel.Password));
 				if (LoginViewModel.Email.Equals("admin@gmail.com") && LoginViewModel.Password.Equals("admin123456")) {
                     HttpContext.Session.SetString("Username", "Admin");
                     HttpContext.Session.SetString("Type", "Admin");
@@ -33,6 +33,13 @@ namespace FinalWebProject.Pages.Authetication
 					HttpContext.Session.SetString("Type", "Accountant");
                     SessionHelpers.SetObjectAsJson(HttpContext.Session, "accountantUser", isAccountantExist);
                     return RedirectToPage("/AccountantSite/Index");
+				}
+                else if(isResellerExist != null)
+                {
+					HttpContext.Session.SetString("Username", isResellerExist.ResellerName);
+					HttpContext.Session.SetString("Type", "Reseller");
+					SessionHelpers.SetObjectAsJson(HttpContext.Session, "resellerUser", isResellerExist);
+                    return RedirectToPage("/ResellerSite/Index");
 				}
                 else
                 {

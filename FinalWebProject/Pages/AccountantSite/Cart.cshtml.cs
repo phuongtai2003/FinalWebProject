@@ -71,7 +71,6 @@ namespace FinalWebProject.Pages.AccountantSite
             var cart = GetCartItems();
             for(int i = 0; i < cart.Count; i++)
             {
-                Debug.WriteLine(quantities.Length);
                 cart[i].Quantity = quantities[i];
             }
             SaveCart(cart);
@@ -116,7 +115,7 @@ namespace FinalWebProject.Pages.AccountantSite
             _context.Receipt.Add(receipt);
             await _context.SaveChangesAsync();
 
-            int newReceiptId = _context.Receipt.Max(r => r.ReceiptId);
+            int newReceiptId = receipt.ReceiptId;
             foreach(var item in cartItems)
             {
                 var receiptDetails = new ReceiptDetails
@@ -157,8 +156,9 @@ namespace FinalWebProject.Pages.AccountantSite
                     await _context.SaveChangesAsync();
                 }
             }
+            ClearCart();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ReceiptListing");
         }
     }
 }

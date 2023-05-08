@@ -21,5 +21,6 @@ namespace FinalWebProject.Data
 		public int WarehouseID { get; set; }
 		public Warehouse Warehouse { get; set;}
 		public virtual ICollection<Receipt> Receipts { get; set; }
+		public virtual ICollection<ExportReceipt> ExportReceipts { get; set; }
 	}
 }

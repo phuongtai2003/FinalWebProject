@@ -1,0 +1,41 @@
+﻿@page
+@model FinalWebProject.Pages.Admin.ResellerManagement.EditModel
+@{
+	ViewData["Title"] = "Edit Reseller";
+}
+
+<div class = "container">
+	<h5 class = "text-center display-5">Edit Reseller</h5>
+	<div class = "row">
+		<div class = "col-lg-6 mx-auto border rounded my-3 px-3 py-2">
+			<form method = "post">
+				<div asp-validation-summary="ModelOnly" class = "text-danger"></div>
+				<input type = "hidden" asp-for="ResellerVM.ResellerId"/>
+				<div class="form-group mb-3">
+					<label asp-for="ResellerVM.ResellerName" class="control-label"></label>
+					<input asp-for="ResellerVM.ResellerName" class="form-control" />
+					<span asp-validation-for="ResellerVM.ResellerName" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-3">
+					<label asp-for="ResellerVM.ResellerEmail" class="control-label"></label>
+					<input asp-for="ResellerVM.ResellerEmail" class="form-control" />
+					<span asp-validation-for="ResellerVM.ResellerEmail" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-3">
+					<label asp-for="ResellerVM.ResellerPassword" class="control-label"></label>
+					<input asp-for="ResellerVM.ResellerPassword" class="form-control" />
+					<span asp-validation-for="ResellerVM.ResellerPassword" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-3">
+					<label asp-for="ResellerVM.ResellerLocation" class="control-label"></label>
+					<input asp-for="ResellerVM.ResellerLocation" class="form-control" />
+					<span asp-validation-for="ResellerVM.ResellerLocation" class="text-danger"></span>
+				</div>
+				<div class = "form-group">
+					<button type = "submit" class = "btn btn-primary">Save Changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<a asp-page = "./Index" class = "btn btn-danger">Go Back</a>
+</div>

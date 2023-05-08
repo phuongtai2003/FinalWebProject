@@ -27,5 +27,8 @@ namespace FinalWebProject.Data
 		public Manufacturer Manufacturer { get; set; }
 		public virtual ICollection<ReceiptDetails> ReceiptDetails { get; set; }
 		public virtual ICollection<WarehouseProducts> WarehouseProducts { get; set;}
+		public virtual ICollection<ResellerImportReceiptDetails> ResellerImportReceiptDetails { get; set; }
+		public virtual ICollection<ExportReceiptDetails> ExportReceiptDetails { get; set; }
+		public virtual ICollection<ResellerStorage> ResellerStorage { get; set; }
 	}
 }
