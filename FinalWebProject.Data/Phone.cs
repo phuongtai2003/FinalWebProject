@@ -30,5 +30,7 @@ namespace FinalWebProject.Data
 		public virtual ICollection<ResellerImportReceiptDetails> ResellerImportReceiptDetails { get; set; }
 		public virtual ICollection<ExportReceiptDetails> ExportReceiptDetails { get; set; }
 		public virtual ICollection<ResellerStorage> ResellerStorage { get; set; }
+		public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+		public virtual ICollection<Rating> Ratings { get; set; }
 	}
 }

@@ -24,7 +24,7 @@ namespace FinalWebProject.Pages.ResellerSite
                 return Page();
             }
 			WarehouseProducts = await _dbContext.WarehouseProducts.Include(x => x.Warehouse).Include(x => x.Phone).ThenInclude(p => p.Manufacturer).Where(x => x.WarehouseId == id.Value).ToListAsync();
-			return Page();
+            return Page();
         }
     }
 }

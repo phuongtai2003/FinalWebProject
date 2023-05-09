@@ -52,6 +52,35 @@ namespace FinalWebProject.Data.Migrations
                     b.ToTable("Accountant");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.Customer", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
+
+                    b.Property<string>("CustomerAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customer");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.DeliveryStatus", b =>
                 {
                     b.Property<int>("DeliveryStatusId")
@@ -139,6 +168,45 @@ namespace FinalWebProject.Data.Migrations
                     b.ToTable("Manufacturer");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.OrderDetails", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PhoneId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "PhoneId");
+
+                    b.HasIndex("PhoneId");
+
+                    b.ToTable("OrderDetails");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.Phone", b =>
                 {
                     b.Property<int>("PhoneId")
@@ -173,6 +241,24 @@ namespace FinalWebProject.Data.Migrations
                     b.HasIndex("ManufacturerId");
 
                     b.ToTable("Phone");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.Rating", b =>
+                {
+                    b.Property<int>("PhoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("ReviewRating")
+                        .HasColumnType("float");
+
+                    b.HasKey("PhoneId", "CustomerId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("FinalWebProject.Data.Receipt", b =>
@@ -419,6 +505,36 @@ namespace FinalWebProject.Data.Migrations
                     b.Navigation("Reseller");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.Order", b =>
+                {
+                    b.HasOne("FinalWebProject.Data.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.OrderDetails", b =>
+                {
+                    b.HasOne("FinalWebProject.Data.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalWebProject.Data.Phone", "Phone")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("PhoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Phone");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.Phone", b =>
                 {
                     b.HasOne("FinalWebProject.Data.Manufacturer", "Manufacturer")
@@ -428,6 +544,25 @@ namespace FinalWebProject.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("FinalWebProject.Data.Rating", b =>
+                {
+                    b.HasOne("FinalWebProject.Data.Customer", "Customer")
+                        .WithMany("Ratings")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinalWebProject.Data.Phone", "Phone")
+                        .WithMany("Ratings")
+                        .HasForeignKey("PhoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Phone");
                 });
 
             modelBuilder.Entity("FinalWebProject.Data.Receipt", b =>
@@ -551,6 +686,13 @@ namespace FinalWebProject.Data.Migrations
                     b.Navigation("Receipts");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.Customer", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("Ratings");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.DeliveryStatus", b =>
                 {
                     b.Navigation("ResellerImportReceipts");
@@ -566,9 +708,18 @@ namespace FinalWebProject.Data.Migrations
                     b.Navigation("Phones");
                 });
 
+            modelBuilder.Entity("FinalWebProject.Data.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
             modelBuilder.Entity("FinalWebProject.Data.Phone", b =>
                 {
                     b.Navigation("ExportReceiptDetails");
+
+                    b.Navigation("OrderDetails");
+
+                    b.Navigation("Ratings");
 
                     b.Navigation("ReceiptDetails");
 

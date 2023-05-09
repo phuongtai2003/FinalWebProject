@@ -12,12 +12,14 @@ namespace FinalWebProject.Data
 		public FinalDbContext(DbContextOptions<FinalDbContext> options) : base(options) { }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<ReceiptDetails>().HasKey(rd => new {rd.ReceiptId, rd.PhoneId});
+			modelBuilder.Entity<ReceiptDetails>().HasKey(rd => new { rd.ReceiptId, rd.PhoneId });
 			modelBuilder.Entity<WarehouseProducts>().HasKey(wp => new { wp.WarehouseId, wp.PhoneId });
 			modelBuilder.Entity<ResellerImportReceipt>().Property(ric => ric.PaymentStatus).HasDefaultValue(0);
-			modelBuilder.Entity<ResellerImportReceiptDetails>().HasKey(ricd => new { ricd.PhoneId, ricd.ResellerImportReceiptId, ricd.WarehouseId});
-			modelBuilder.Entity<ExportReceiptDetails>().HasKey(erd => new { erd.PhoneId, erd.ResellerId, erd.ExportReceiptId});
-			modelBuilder.Entity<ResellerStorage>().HasKey(rs => new {rs.PhoneId, rs.ResellerId});
+			modelBuilder.Entity<ResellerImportReceiptDetails>().HasKey(ricd => new { ricd.PhoneId, ricd.ResellerImportReceiptId, ricd.WarehouseId });
+			modelBuilder.Entity<ExportReceiptDetails>().HasKey(erd => new { erd.PhoneId, erd.ResellerId, erd.ExportReceiptId });
+			modelBuilder.Entity<ResellerStorage>().HasKey(rs => new { rs.PhoneId, rs.ResellerId });
+			modelBuilder.Entity<Rating>().HasKey(r => new { r.PhoneId, r.CustomerId });
+			modelBuilder.Entity<OrderDetails>().HasKey(od => new {od.OrderId, od.PhoneId});
 		}
 		public DbSet<Accountant> Accountant { get; set; }
 		public DbSet<Warehouse> Warehouse { get; set; }
@@ -25,7 +27,7 @@ namespace FinalWebProject.Data
 		public DbSet<Phone> Phone { get; set; }
 		public DbSet<Receipt> Receipt { get; set; }
 		public DbSet<ReceiptDetails> ReceiptDetails { get; set; }
-		public DbSet<WarehouseProducts> WarehouseProducts { get; set;}
+		public DbSet<WarehouseProducts> WarehouseProducts { get; set; }
 		public DbSet<Reseller> Reseller { get; set; }
 		public DbSet<ResellerImportReceipt> ResellerImportReceipt { get; set; }
 		public DbSet<ResellerImportReceiptDetails> ResellerImportReceiptDetail { get; set; }
@@ -33,5 +35,9 @@ namespace FinalWebProject.Data
 		public DbSet<ResellerStorage> ResellerStorage { get; set; }
 		public DbSet<ExportReceipt> ExportReceipt { get; set; }
 		public DbSet<ExportReceiptDetails> ExportReceiptDetails { get; set; }
+		public DbSet<Customer> Customer { get; set; }
+		public DbSet<Order> Order { get; set; }
+		public DbSet<OrderDetails> OrderDetails { get;set; }
+		public DbSet<Rating> Rating { get; set; }
 	}
 }
