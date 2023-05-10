@@ -1,0 +1,33 @@
+﻿@page
+@model FinalWebProject.Pages.AccountantSite.ExportReceiptDetailsModel
+@{
+}
+
+<div class = "container">
+	<h4 class = "display-4 text-center mb-3">Export Receipt no @Model.ExportReceipt.ExportReceiptId Details</h4>
+	<table class = "table">
+		<thead>
+			<tr>
+				<th>@Html.DisplayNameFor(model => model.ExportReceiptDetails[0].Phone.PhoneName)</th>
+				<th>@Html.DisplayNameFor(model => model.ExportReceiptDetails[0].Phone.Image)</th>
+				<th>@Html.DisplayNameFor(model => model.ExportReceiptDetails[0].Quantity)</th>
+				<th>@Html.DisplayNameFor(model => model.ExportReceiptDetails[0].Price)</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach(var item in Model.ExportReceiptDetails)
+				{
+					<tr>
+						<th>@Html.DisplayFor(modelItem => item.Phone.PhoneName)</th>
+						<th> <img style = "width: 25%; height: 25%;" src = "@Html.DisplayFor(modelItem => item.Phone.Image)">
+						</th>
+						<th>@Html.DisplayFor(modelItem => item.Quantity)</th>
+						<th>@item.Price.ToString("#,##0") VNĐ</th>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	<a asp-page = "./ExportReceiptListing" class = "btn btn-danger">Go Back</a>
+</div>

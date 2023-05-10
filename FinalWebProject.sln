@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalWebProject", "FinalWeb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalWebProject.Data", "FinalWebProject.Data\FinalWebProject.Data.csproj", "{0DB19B03-9489-4C68-8556-9175C1F01492}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalWebProject.API", "FinalWebProject.API\FinalWebProject.API.csproj", "{A7E90224-BD00-4651-9B38-470253FCD66E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalWebProject.API", "FinalWebProject.API\FinalWebProject.API.csproj", "{A7E90224-BD00-4651-9B38-470253FCD66E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

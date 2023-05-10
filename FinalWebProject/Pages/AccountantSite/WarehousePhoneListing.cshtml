@@ -1,0 +1,32 @@
+﻿@page
+@model FinalWebProject.Pages.AccountantSite.WarehousePhoneListingModel
+@{
+}
+
+<div class = "container">
+	<h4 class = "text-center display-4">Warehouse @Model.WarehouseProducts[0].WarehouseId Products</h4>
+	<table class = "table">
+		<thead>
+			<tr>
+				<th>@Html.DisplayNameFor(model => model.WarehouseProducts[0].Phone.PhoneName)</th>
+				<th>@Html.DisplayNameFor(model => model.WarehouseProducts[0].Phone.Manufacturer.ManufacturerName)</th>
+				<th>@Html.DisplayNameFor(model => model.WarehouseProducts[0].Warehouse.WarehouseName)</th>
+				<th>@Html.DisplayNameFor(model => model.WarehouseProducts[0].Quantity)</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach(var item in Model.WarehouseProducts)
+				{
+					<tr>
+						<td>@Html.DisplayFor(modelItem => item.Phone.PhoneName)</td>
+						<td>@Html.DisplayFor(modelItem => item.Phone.Manufacturer.ManufacturerName)</td>
+						<td>@Html.DisplayFor(modelItem => item.Warehouse.WarehouseName)</td>
+						<td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	<a asp-page = "./Index" class = "btn btn-danger">Go Back</a>
+</div>

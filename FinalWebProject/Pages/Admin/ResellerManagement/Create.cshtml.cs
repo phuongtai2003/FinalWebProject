@@ -23,6 +23,12 @@ namespace FinalWebProject.Pages.Admin.ResellerManagement
             if(!ModelState.IsValid || _dbContext.Reseller == null || Reseller == null) {
                 return Page();
             }
+            var reseller = _dbContext.Reseller.FirstOrDefault(r => r.ResellerEmail == Reseller.ResellerEmail);
+            if(reseller != null)
+            {
+                ViewData["Message"] = "Seeker email has already exist";
+                return Page();
+            }
             var resellerModel = new Reseller
             {
                 ResellerName = Reseller.ResellerName,

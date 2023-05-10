@@ -1,0 +1,31 @@
+﻿@page
+@model FinalWebProject.Pages.AccountantSite.ExportReceiptListingModel
+@{
+}
+
+<div class = "container">
+	<h4 class = "display-4 text-center">Export Receipts</h4>
+	<div class = "row">
+	@{
+		foreach (var receipt in Model.ExportReceipts)
+		{
+			<div class = "col-lg-4">
+				<div class = "card h-100">
+					<div class = "card-header">
+						<h5>Export Receipt Id: @Html.DisplayFor(receiptItem => receipt.ExportReceiptId)</h5>
+					</div>
+					<div class = "card-body">
+						<p>Export Receipt Total: <strong>@receipt.TotalPrice.ToString("#,##0") VNĐ</strong></p>
+						<p>Export Receipt Date: <strong>@receipt.DateCreated.ToString("dd/MM/yyyy")</strong></p>
+						<p>Export Receipt Accountant: <strong>@Html.DisplayFor(receiptItem => receipt.Accountant.AcccountantName)</strong></p>
+					</div>
+					<div class = "card-footer">
+						<a asp-page = "./ExportReceiptDetails" asp-route-id = "@receipt.ExportReceiptId" class="btn btn-primary">View Details</a>
+					</div>
+				</div>
+			</div>
+		}
+	}
+	</div>
+	<a asp-page="./Index" class = "btn btn-danger mt-3">Go Back</a>
+</div>

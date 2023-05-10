@@ -74,7 +74,7 @@ namespace FinalWebProject.API.Controllers
         }
         [HttpPut]
         [Route("UpdateAddress")]
-        public async Task<IActionResult> UpdateAddress([FromBody] string address)
+        public async Task<IActionResult> UpdateAddress(CustomerAddress customerAddress)
         {
             Request.Headers.TryGetValue("X-Auth-Token", out StringValues headerValue);
             if (headerValue.IsNullOrEmpty())
@@ -83,7 +83,9 @@ namespace FinalWebProject.API.Controllers
             }
             var customer = await _dbContext.Customer.FirstOrDefaultAsync(cus => cus.CustomerId == int.Parse(headerValue));
             if(customer != null) {
-                var newCustomer = new Customer { CustomerId = customer.CustomerId , CustomerEmail = customer.CustomerEmail, CustomerAddress = address , CustomerName = customer.CustomerName, CustomerPassword = customer.CustomerPassword};
+                var newCustomer = new Customer { CustomerId = customer.CustomerId , CustomerEmail = customer.CustomerEmail, CustomerAddress = customerAddress.Address , CustomerName = customer.CustomerName, CustomerPassword = customer.CustomerPassword};
+                _dbContext.Entry(customer).CurrentValues.SetValues(newCustomer);
+                await _dbContext.SaveChangesAsync();
                 return StatusCode(200, Json(new { message = "Update address success" }));
             }
             else
