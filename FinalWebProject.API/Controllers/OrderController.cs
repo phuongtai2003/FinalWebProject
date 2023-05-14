@@ -80,5 +80,24 @@ namespace FinalWebProject.API.Controllers
 
             return StatusCode(200, Json(new { message = "Create Order Successfully" }));
         }
+
+        [HttpGet]
+        [Route("GetOrderDetails/{orderId:int}")]
+        public async Task<IActionResult> GetOrderDetails(int orderId)
+        {
+			Request.Headers.TryGetValue("X-Auth-Token", out StringValues headerValue);
+			if (headerValue.IsNullOrEmpty())
+			{
+				return StatusCode(400, Json(new { msg = "Not Authenticated" }));
+			}
+			var order = await _dbContext.Order.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            if (order == null)
+            {
+                return StatusCode(500, Json(new { error = "Order does not exist" }));
+            }
+
+            var orderDetails = await _dbContext.OrderDetails.Include(o => o.Phone).ThenInclude(p => p.Manufacturer).Where(o => o.OrderId == order.OrderId).ToListAsync();
+            return StatusCode(200, Json(orderDetails));
+        }
     }
 }
